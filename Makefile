@@ -1,4 +1,4 @@
-LIBFILES = ft_printf
+LIBFILES = ft_printf format
 SRCSDIR = ./src/
 OBJSDIR = ./bin/
 LIBSRCS = $(addprefix $(SRCSDIR), $(addsuffix .c, $(LIBFILES)))
