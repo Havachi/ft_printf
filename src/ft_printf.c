@@ -6,7 +6,7 @@
 /*   By: arossi <marvin@42lausanne.ch>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 12:33:53 by arossi            #+#    #+#             */
-/*   Updated: 2021/11/11 16:44:45 by arossi           ###   ########.fr       */
+/*   Updated: 2021/11/12 17:05:05 by arossi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,43 +15,55 @@
 int	ft_printf(const char *s, ...)
 {
 	va_list		ap;
-	int		i;
+	int			i;
+	int			ret;
 
+	ret = 0;
 	va_start(ap, s);
 	i = 0;
-	while (s[i] != '\0')
+	while (s[i])
 	{
-		while (s[i] != '%')
+		if (s[i] == '%')
 		{	
-			ft_putchar_fd(s[i], 1);
+			if (ft_is_inset(s[i + 1]))
+				ret += ft_parsectl(s[i++ + 1], ap);
 			i++;
 		}
-		if (s[i] == '\0')
-			break ;
-		if (s[i] == '%')
+		else
 		{
-			if (s[i + 1] != '\0')
-				ft_parsectl(s[i++ + 1], ap);
+			ft_putchar_fd(s[i++], 1);
+			ret++;
 		}
-		i++;
-	}
+	}		
 	va_end(ap);
-	return (0);
+	return (ret);
 }
 
-void	ft_print(char *str)
+int	ft_print(char *str)
 {
-	size_t	len;
-	size_t	i;
+	int	len;
+	int	i;
+
 	i = 0;
 	len = ft_strlen(str);
-	if (len > 0)
+	if (check_str(str))
 	{
-		while (str[i] != '\0' && i < len)
+		while (i < len)
 		{
 			write(1, &str[i], 1);
 			i++;
 		}
 	}
-	free(str);
+	if (str != NULL)
+		free(str);
+	return (i);
+}
+
+int	ft_is_inset(char c)
+{
+	if (c == 'c' || c == 's' || c == 'p' || c == 'd' \
+	|| c == 'u' || c == 'i' || c == 'x' \
+	|| c == 'X' || c == '%' )
+		return (1);
+	return (0);
 }

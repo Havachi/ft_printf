@@ -6,45 +6,40 @@
 /*   By: arossi <marvin@42lausanne.ch>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 11:50:02 by arossi            #+#    #+#             */
-/*   Updated: 2021/11/11 16:27:34 by arossi           ###   ########.fr       */
+/*   Updated: 2021/11/12 17:09:21 by arossi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft.h"
 
-char	*ft_convert_c(char c)
+char	*ft_convert_c(int c)
 {
 	char	*str;
 
-	str = ft_calloc(2, sizeof(char));
-	str[0] = c;
+	str = NULL;
+	str = (char *)ft_calloc(2, sizeof(char));
+	if (str == NULL)
+		return (NULL);
+	str[0] = (char)c;
 	str[1] = '\0';
 	return (str);
 }
-char	*ft_convert_ptr(void *ptr)
+
+char	*ft_convert_s(char *s)
 {
-	char	*ret;
-
-	ret = ft_convert_x((unsigned long)ptr, 0);
-	return (ret);
-}
-
-char	*ft_convert_num(int i)
-{
-	char	*ret;
-
-	ret = ft_itoa(i);
-	return (ret);
+	if (check_str(s))
+		return (s);
+	return (NULL);
 }
 
 char	*ft_convert_x(unsigned long x, int upper)
 {
 	char	*ret;
-	int	i;
+	int		i;
 
-	i = 17;
-	ret = malloc(sizeof(char) * 18);
-	ret[i--] = '\0';
+	i = 18;
+	ret = (char *)calloc(18, sizeof(char));
 	if (x == 0)
 	{
 		free(ret);
@@ -58,6 +53,7 @@ char	*ft_convert_x(unsigned long x, int upper)
 			ret[i] = "0123456789ABCDEF"[x % 16];
 		else
 			ret[i] = "0123456789abcdef"[x % 16];
+		x /= 16;
 		i++;
 	}
 	return (ret);
