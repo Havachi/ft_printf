@@ -11,11 +11,14 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
+#include <stdio.h>
 void	ft_parsectl(char c, va_list ap)
 {
-	if (c == 'c')
-		ft_putchar_fd(va_arg(ap, int), 1);
+	if (c == 'c')	
+	{
+		char *sauce = ft_convert_c((char)va_arg(ap, int));
+		ft_print(sauce);
+	}
 	else if (c == 's')
 		ft_print(va_arg(ap, char *));
 	else if (c == 'p')

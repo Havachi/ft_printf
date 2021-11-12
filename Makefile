@@ -1,9 +1,9 @@
 NAME = libftprintf.a
 LIBFILES = ft_parse ftprintf ft_converter 
-INCL = includes -Ilibft
+INCL = -Iincludes -Ilibft
 CC = clang
-CFLAGS = -Wall -Wextra -Werror 
-
+CFLAGS = -Wall -Wextra -Werror -fpie
+CFLAGS += --analyze
 AR = /usr/bin/ar rcs
 
 LFTDIR = libft
@@ -25,7 +25,7 @@ $(NAME) : $(LIBOBJS) $(LFT)
 $(LIBOBJS): $(OBJSDIR)/%.o: $(SRCSDIR)/%.c
 	@mkdir -p $(OBJSDIR)
 	@echo "Compiling $@"
-	$(CC) -c $(CFLAGS) $< -o $@ 
+	$(CC) -c $(CFLAGS) $< -o $@ $(INCL)
 
 $(LFT):
 	make -C $(LFTDIR)
@@ -36,4 +36,7 @@ fclean: clean
 
 re: fclean all
 
+init:
+	git -C $(LFTDIR) pull
+	make -C $(LFTDIR)
 .PHONY: all clean fclean re

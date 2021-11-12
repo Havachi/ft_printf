@@ -12,6 +12,15 @@
 
 #include "ft_printf.h"
 
+char	*ft_convert_c(char c)
+{
+	char	*str;
+
+	str = ft_calloc(2, sizeof(char));
+	str[0] = c;
+	str[1] = '\0';
+	return (str);
+}
 char	*ft_convert_ptr(void *ptr)
 {
 	char	*ret;
@@ -31,13 +40,16 @@ char	*ft_convert_num(int i)
 char	*ft_convert_x(unsigned long x, int upper)
 {
 	char	*ret;
-	int		i;
+	int	i;
 
 	i = 17;
 	ret = malloc(sizeof(char) * 18);
 	ret[i--] = '\0';
 	if (x == 0)
+	{
+		free(ret);
 		return (0);
+	}
 	if (x < 0)
 		ft_convert_x(INT_MAX - (x * -1), upper);
 	while (x > 0)
