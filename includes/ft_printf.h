@@ -6,7 +6,7 @@
 /*   By: arossi <marvin@42lausanne.ch>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 12:47:39 by arossi            #+#    #+#             */
-/*   Updated: 2021/11/12 16:29:29 by arossi           ###   ########.fr       */
+/*   Updated: 2021/11/18 15:52:36 by arossi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
+# include <stdio.h>
 
 int		ft_printf(const char *s, ...);
 int		ft_print(char *str);
@@ -30,6 +31,6 @@ char	*ft_convert_s(char *s);
 char	*ft_convert_ptr(void *ptr);
 char	*ft_convert_int(int i);
 char	*ft_convert_uint(unsigned int u);
-char	*ft_convert_x(unsigned long x, int upper);
+char	*ft_convert_hex(unsigned long long x, char *str, int upper);
 int		check_str(char *str);
 #endif

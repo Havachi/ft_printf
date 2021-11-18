@@ -6,7 +6,7 @@
 /*   By: arossi <marvin@42lausanne.ch>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 11:50:02 by arossi            #+#    #+#             */
-/*   Updated: 2021/11/12 17:09:21 by arossi           ###   ########.fr       */
+/*   Updated: 2021/11/18 16:12:21 by arossi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,30 @@ char	*ft_convert_s(char *s)
 	return (NULL);
 }
 
-char	*ft_convert_x(unsigned long x, int upper)
+char	*ft_convert_hex(unsigned long long x, char *str, int upper)
 {
-	char	*ret;
-	int		i;
+	int		count;
 
-	i = 18;
-	ret = (char *)calloc(18, sizeof(char));
-	if (x == 0)
+	printf("[DEBUG]\nx = %llu\nstr = %s\n", x, str);
+	count = 0;
+	if (x > 15)
 	{
-		free(ret);
-		return (0);
+		str = ft_strcat(str, ft_convert_hex(x / 16, str, upper));
+		str = ft_strcat(str, ft_convert_hex(x % 16, str, upper));
 	}
-	if (x < 0)
-		ft_convert_x(INT_MAX - (x * -1), upper);
-	while (x > 0)
+	else
 	{
-		if (upper)
-			ret[i] = "0123456789ABCDEF"[x % 16];
+
+		printf("[DEBUG]\n x = %s\n",(char *)(x - 10 + 'a' ));
+		if (x <= 9)
+			str = ft_strcat(str, (const char *)(x + '0'));
 		else
-			ret[i] = "0123456789abcdef"[x % 16];
-		x /= 16;
-		i++;
+		{
+			if (upper)
+				str = ft_strcat(str, (const char *)(x - 10 + 'A'));
+			else
+				str = ft_strcat(str, (const char *)(x - 10 + 'a'));
+		}
 	}
-	return (ret);
+	return (str);
 }

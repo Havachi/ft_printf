@@ -6,7 +6,7 @@
 /*   By: arossi <marvin@42lausanne.ch>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 11:32:34 by arossi            #+#    #+#             */
-/*   Updated: 2021/11/12 17:09:23 by arossi           ###   ########.fr       */
+/*   Updated: 2021/11/18 15:51:43 by arossi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_parse_char(char c, va_list ap)
 	}	
 	if (c == '%')
 	{
-		ft_putchar_fd((char)va_arg(ap, void *), 1);
+		ft_putchar_fd('%', 1);
 		return (1);
 	}
 	return (0);
@@ -55,6 +55,7 @@ int	ft_parse_char(char c, va_list ap)
 int	ft_parse_num(char c, va_list ap)
 {
 	char	*str;
+	size_t	len;
 
 	str = NULL;
 	if (c == 'd' || c == 'i')
@@ -68,22 +69,30 @@ int	ft_parse_num(char c, va_list ap)
 	if (str == NULL)
 		return (0);
 	ft_putstr_fd(str, 1);
-	return (ft_strlen(str));
+	len = ft_strlen(str);
+	free(str);
+	return (len);
 }
 
 int	ft_parse_hex(char c, va_list ap)
 {
-	char			*str;
+	int		len;
+	int		upper;
+	void	*arg;
+	char	*str;
 
-	if (c == 'p')
-	{
-		str = ft_convert_x((unsigned long)va_arg(ap, void *), 0);
-		str = ft_strcat("0x", str);
-		ft_putstr_fd(str, 1);
-	}
-	else if (c == 'x')
-		return (ft_print(ft_convert_x(va_arg(ap, int), 0)));
-	else if (c == 'X')
-		return (ft_print(ft_convert_x(va_arg(ap, int), 1)));
-	return (0);
+	len = 0;
+	upper = 0;
+	str = ft_calloc(20, sizeof(char));
+	if (c == 'X')
+		upper = 1;
+	arg = va_arg(ap, void *);
+	printf("[DEBUG parse] arg = %p", arg);
+	str = ft_convert_hex((unsigned int)arg, str, upper);
+	printf("[DEBUG parse] str = %s \n", str); 
+	ft_putstr_fd("0x", 1);
+	ft_putstr_fd(str, 1);
+	len = ft_strlen(str) + 2;
+	free(str);
+	return (len);
 }
