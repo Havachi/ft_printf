@@ -49,4 +49,10 @@ re: fclean all
 init:
 	git -C $(LFTDIR) pull
 	make -C $(LFTDIR)
+inittest:
+	git clone "https://github.com/Tripouille/printfTester.git"
+	git clone "https://github.com/paulo-santana/ft_printf_tester.git"
+rmtest:	
+	rm -rf printfTester
+	rm -rf ft_printf_tester
 .PHONY: all clean fclean re
