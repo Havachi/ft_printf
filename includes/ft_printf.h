@@ -26,6 +26,7 @@ int		ft_parsectl(char c, va_list ap);
 int		ft_parse_char(char c, va_list ap);
 int		ft_parse_num(char c, va_list ap);
 int		ft_parse_hex(char c, va_list ap);
+int		ft_parse_ptr(va_list ap);
 char	*ft_convert_c(int c);
 char	*ft_convert_s(char *s);
 char	*ft_convert_ptr(void *ptr);

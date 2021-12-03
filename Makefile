@@ -1,8 +1,16 @@
+MODE = 1
+
 NAME = libftprintf.a
 LIBFILES = ft_printf ft_parse ft_converter ft_check 
 INCL = -I$(INCLDIR)
-CC = clang
+
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+ifeq ($(MODE), 1)
+CFLAGS += -g2 -pipe
+else
+CFLAGS += -D_FORTIFY_SOURCE=2 -O2
+endif
 AR = ar qcs
 
 LFTDIR = libft

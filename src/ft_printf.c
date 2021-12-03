@@ -25,9 +25,9 @@ int	ft_printf(const char *s, ...)
 	{
 		if (s[i] == '%')
 		{	
-			if (ft_is_inset(s[i + 1]))
-				ret += ft_parsectl(s[i++ + 1], ap);
-			i++;
+			if (ft_is_inset(s[++i]))
+				ret += ft_parsectl(s[i++], ap);
+			
 		}
 		else
 		{

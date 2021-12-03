@@ -35,28 +35,12 @@ char	*ft_convert_s(char *s)
 
 char	*ft_convert_hex(unsigned long long x, char *str, int upper)
 {
-	int		count;
-
-	printf("[DEBUG]\nx = %llu\nstr = %s\n", x, str);
-	count = 0;
-	if (x > 15)
-	{
-		str = ft_strcat(str, ft_convert_hex(x / 16, str, upper));
-		str = ft_strcat(str, ft_convert_hex(x % 16, str, upper));
-	}
-	else
-	{
-
-		printf("[DEBUG]\n x = %s\n",(char *)(x - 10 + 'a' ));
-		if (x <= 9)
-			str = ft_strcat(str, (const char *)(x + '0'));
-		else
-		{
-			if (upper)
-				str = ft_strcat(str, (const char *)(x - 10 + 'A'));
-			else
-				str = ft_strcat(str, (const char *)(x - 10 + 'a'));
-		}
+	if (x == 0)
+		str = "0";
+	else{
+		if (upper)
+			return (ft_ulltoau(x,str,16));
+		return (ft_ulltoa(x,str,16));
 	}
 	return (str);
 }
