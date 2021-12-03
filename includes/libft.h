@@ -6,7 +6,7 @@
 /*   By: arossi <marvin@42lausanne.ch>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 10:01:15 by arossi            #+#    #+#             */
-/*   Updated: 2021/11/12 16:32:21 by arossi           ###   ########.fr       */
+/*   Updated: 2021/10/22 14:10:04 by arossi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,9 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
-void	ft_putnbr_fd(int n, int fd);
+int	ft_putnbr_fd(int n, int fd);
 void	ft_putchar(char c);
 void	ft_putstr(char *c);
-char	*ft_utoa(unsigned int u);
+char	*ft_ulltoa(unsigned long long n, char *buf, int base);
+char	*ft_ulltoau(unsigned long long n, char *buf, int base);
 #endif

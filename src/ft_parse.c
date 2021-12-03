@@ -58,11 +58,22 @@ int	ft_parse_char(char c, va_list ap)
 
 int	ft_parse_num(char c, va_list ap)
 {
+	int		num;
+	unsigned int	unum;
+	int		wrote;
+
+	wrote = 0;
 	if (c == 'd' || c == 'i')
-		return (ft_putnbr_fd(va_arg(ap, int), 1));
+	{
+		num = va_arg(ap, int);
+		wrote = (ft_putnbr_fd((int)num, 1));
+	}
 	else if (c == 'u')
-		return (ft_putnbr_fd(va_arg(ap, unsigned int), 1));
-	return(0);
+	{
+		unum = va_arg(ap, unsigned int);
+		wrote = (ft_putnbr_fd((unsigned int)unum, 1));
+	}
+	return(wrote);
 }
 
 int	ft_parse_hex(char c, va_list ap)
@@ -71,18 +82,20 @@ int	ft_parse_hex(char c, va_list ap)
 	int		upper;
 	void		*arg;
 	char		*str;
+	char		*ptr;
 
 	len = 0;
 	upper = 0;
-	str = malloc(sizeof(char) * 20 + 2);
-	if (!str)
+	str = ft_calloc(20 + 2, sizeof(char));
+	ptr = str;
+	if (!ptr)
 		return(-1);
 	if (c == 'X')
 		upper = 1;
 	arg = va_arg(ap, void *);
-	str = ft_convert_hex((unsigned long long)arg, str, upper);
-	ft_putstr_fd(str, 1);
-	len = ft_strlen(str) + 2;
+	ptr = ft_convert_hex((unsigned long long)arg, ptr, upper);
+	ft_putstr_fd(ptr, 1);
+	len = ft_strlen(ptr) + 2;
 	free(str);
 	return (len);
 }
@@ -92,20 +105,22 @@ int 	ft_parse_ptr(va_list ap)
 	int	len;
 	void	*arg;
 	char	*str;
-	
+	char	*ptr;
+
 	len = 0;
 	str = malloc(sizeof(char) * 20 + 2);
-	if (str == NULL)
+	ptr = str;
+	if (ptr == NULL)
 		return(-1);
 	arg = va_arg(ap, void *);	
 	ft_putstr_fd("0x", 1);
 	if(arg == ((void *)0) || arg == 0)
-		str = "0";
+		ptr = "0";
 	else
-		str = ft_convert_hex((unsigned long long)arg, str, 0);
-	ft_putstr_fd(str, 1);
-	len = ft_strlen(str) + 2;
-	if (sizeof(str))
+		ptr = ft_convert_hex((unsigned long long)arg, ptr, 0);
+	ft_putstr_fd(ptr, 1);
+	len = ft_strlen(ptr) + 2;
+	if (sizeof(ptr))
 		free(str);
 	return (len);
 }
